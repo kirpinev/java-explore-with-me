@@ -15,7 +15,6 @@ import ru.practicum.ewm.repository.EndpointHitRepository;
 import ru.practicum.ewm.service.EndpointHitServiceImpl;
 
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,9 +31,6 @@ public class EndpointHitServiceImplTest {
 
     @Mock
     private EndpointHitRepository endpointHitRepository;
-
-    private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter
-            .ofPattern("yyyy-MM-dd HH:mm:ss");
 
     private final EndpointHitDto endpointHitDto = new EndpointHitDto(
             "ewm-main-service",
@@ -57,14 +53,14 @@ public class EndpointHitServiceImplTest {
             endpointHitDto.getApp(),
             endpointHitDto.getUri(),
             endpointHitDto.getIp(),
-            LocalDateTime.parse(endpointHitDto.getTimestamp(), DATE_TIME_FORMATTER));
+            endpointHitDto.getTimestamp());
 
     private final EndpointHit endpointHit = new EndpointHit(
             1L,
             endpointHitDto.getApp(),
             endpointHitDto.getUri(),
             endpointHitDto.getIp(),
-            LocalDateTime.parse(endpointHitDto.getTimestamp(), DATE_TIME_FORMATTER));
+            endpointHitDto.getTimestamp());
 
     @Test
     void createNewHit() {

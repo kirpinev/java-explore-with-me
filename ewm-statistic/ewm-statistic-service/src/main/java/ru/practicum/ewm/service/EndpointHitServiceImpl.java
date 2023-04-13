@@ -29,7 +29,7 @@ public class EndpointHitServiceImpl implements EndpointHitService {
     }
 
     @Override
-    @Transactional
+    @Transactional(readOnly = true)
     public List<ViewStatDto> getStats(LocalDateTime start, LocalDateTime end,
                                       List<String> uris, Boolean unique) {
         if (uris.isEmpty()) {

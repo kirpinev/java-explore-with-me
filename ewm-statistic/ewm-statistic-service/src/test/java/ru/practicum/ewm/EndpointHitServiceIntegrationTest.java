@@ -10,9 +10,6 @@ import ru.practicum.ewm.dto.CreatedEndpointHitDto;
 import ru.practicum.ewm.dto.EndpointHitDto;
 import ru.practicum.ewm.service.EndpointHitService;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-
 @Transactional
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE)
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
@@ -20,9 +17,6 @@ public class EndpointHitServiceIntegrationTest {
 
     @Autowired
     private EndpointHitService endpointHitService;
-
-    private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter
-            .ofPattern("yyyy-MM-dd HH:mm:ss");
 
     private final EndpointHitDto endpointHitDto = new EndpointHitDto(
             "ewm-main-service",
@@ -39,7 +33,6 @@ public class EndpointHitServiceIntegrationTest {
         Assertions.assertEquals(endpointHitDto.getApp(), createdEndpointHitDto.getApp());
         Assertions.assertEquals(endpointHitDto.getUri(), createdEndpointHitDto.getUri());
         Assertions.assertEquals(endpointHitDto.getIp(), createdEndpointHitDto.getIp());
-        Assertions.assertTrue(LocalDateTime.parse(endpointHitDto.getTimestamp(), DATE_TIME_FORMATTER)
-                .isEqual(createdEndpointHitDto.getTimestamp()));
+        Assertions.assertTrue(endpointHitDto.getTimestamp().isEqual(createdEndpointHitDto.getTimestamp()));
     }
 }

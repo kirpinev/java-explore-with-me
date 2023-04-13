@@ -15,7 +15,6 @@ import ru.practicum.ewm.service.EndpointHitService;
 
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import static org.hamcrest.Matchers.is;
@@ -38,9 +37,6 @@ public class ServiceControllerTest {
     @Autowired
     private MockMvc mvc;
 
-    private static final DateTimeFormatter DATE_TIME_FORMATTER =
-            DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-
     private final EndpointHitDto endpointHitDto = new EndpointHitDto(
             "ewm-main-service",
             "/events",
@@ -52,7 +48,7 @@ public class ServiceControllerTest {
             endpointHitDto.getApp(),
             endpointHitDto.getUri(),
             endpointHitDto.getIp(),
-            LocalDateTime.parse(endpointHitDto.getTimestamp(), DATE_TIME_FORMATTER));
+            endpointHitDto.getTimestamp());
 
     private final ViewStatDto viewStatDto = new ViewStatDto(
             createdEndpointHitDto.getApp(),
@@ -72,7 +68,7 @@ public class ServiceControllerTest {
                 .andExpect(jsonPath("$.app", is(endpointHitDto.getApp()), String.class))
                 .andExpect(jsonPath("$.uri", is(endpointHitDto.getUri()), String.class))
                 .andExpect(jsonPath("$.ip", is(endpointHitDto.getIp()), String.class))
-                .andExpect(jsonPath("$.timestamp", is(endpointHitDto.getTimestamp()), String.class));
+                .andExpect(jsonPath("$.timestamp", is("2022-09-06 11:00:23"), String.class));
     }
 
     @Test
