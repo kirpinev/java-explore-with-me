@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.practicum.ewm.dto.EndpointHitDto;
 
 import java.nio.charset.StandardCharsets;
+import java.time.LocalDateTime;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -31,7 +32,7 @@ public class ErrorControllerTest {
             "ewm-main-service",
             "",
             "192.163.0.1",
-            "2022-09-06 11:00:23");
+            LocalDateTime.now());
 
     @Test
     void badRequest() throws Exception {

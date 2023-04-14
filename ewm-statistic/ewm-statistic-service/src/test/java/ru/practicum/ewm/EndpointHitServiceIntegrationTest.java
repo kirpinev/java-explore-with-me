@@ -10,6 +10,8 @@ import ru.practicum.ewm.dto.CreatedEndpointHitDto;
 import ru.practicum.ewm.dto.EndpointHitDto;
 import ru.practicum.ewm.service.EndpointHitService;
 
+import java.time.LocalDateTime;
+
 @Transactional
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE)
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
@@ -22,7 +24,7 @@ public class EndpointHitServiceIntegrationTest {
             "ewm-main-service",
             "/events",
             "192.163.0.1",
-            "2022-09-06 11:00:23");
+            LocalDateTime.now());
 
     @Test
     void createNewHit() {
