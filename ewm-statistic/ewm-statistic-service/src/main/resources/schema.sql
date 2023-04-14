@@ -7,3 +7,8 @@ create table if not exists endpoint_hit
     timestamp timestamp without time zone not null,
     constraint pk_endpoint_hit primary key (id)
 );
+
+create index if not exists idx_endpoint_hit_timestamp on endpoint_hit (timestamp);
+create index if not exists idx_endpoint_hit_uri on endpoint_hit (uri);
+create index if not exists idx_endpoint_hit_app on endpoint_hit (app);
+create index if not exists idx_endpoint_hit_ip on endpoint_hit (ip);
