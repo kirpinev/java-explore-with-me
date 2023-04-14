@@ -36,7 +36,7 @@ public class EndpointHitServiceImplTest {
             "ewm-main-service",
             "/events",
             "192.163.0.1",
-            "2022-09-06 11:00:23");
+            LocalDateTime.now());
 
     private final ViewStatDto viewStatDto = new ViewStatDto(
             endpointHitDto.getApp(),
