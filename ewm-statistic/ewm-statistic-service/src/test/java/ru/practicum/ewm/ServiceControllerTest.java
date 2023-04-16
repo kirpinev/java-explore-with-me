@@ -70,7 +70,7 @@ public class ServiceControllerTest {
                         .content(mapper.writeValueAsString(endpointHitDto))
                         .characterEncoding(StandardCharsets.UTF_8)
                         .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
+                .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.app", is(endpointHitDto.getApp()), String.class))
                 .andExpect(jsonPath("$.uri", is(endpointHitDto.getUri()), String.class))
                 .andExpect(jsonPath("$.ip", is(endpointHitDto.getIp()), String.class))
