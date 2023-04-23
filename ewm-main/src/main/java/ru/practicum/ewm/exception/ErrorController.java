@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
@@ -95,7 +94,7 @@ public class ErrorController {
     @Builder
     @AllArgsConstructor
     @Jacksonized
-    public static class ErrorResponse implements Serializable {
+    public static class ErrorResponse {
         String status;
         String reason;
         String message;

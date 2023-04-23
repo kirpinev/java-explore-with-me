@@ -23,6 +23,8 @@ public class CategoryServiceImpl implements CategoryService {
 
     private final EventRepository eventRepository;
 
+    private static final String CATEGORY_NOT_FOUND_MESSAGE = "Category with id=%s was not found";
+
     @Override
     @Transactional
     public CategoryDto create(NewCategoryDto newCategoryDto) {
@@ -46,7 +48,7 @@ public class CategoryServiceImpl implements CategoryService {
         List<Category> categories = categoryRepository.findCategoryById(categoryId, pageable);
 
         if (categories.isEmpty()) {
-            throw new NotFoundException(String.format(CategoryConstants.CATEGORY_NOT_FOUND_MESSAGE, categoryId));
+            throw new NotFoundException(String.format(CATEGORY_NOT_FOUND_MESSAGE, categoryId));
         }
 
         return CategoryMapper.toCategoryDto(categories.get(0));
@@ -62,7 +64,7 @@ public class CategoryServiceImpl implements CategoryService {
         Integer integer = categoryRepository.deleteCategoryById(categoryId);
 
         if (integer == 0) {
-            throw new NotFoundException(String.format(CategoryConstants.CATEGORY_NOT_FOUND_MESSAGE, categoryId));
+            throw new NotFoundException(String.format(CATEGORY_NOT_FOUND_MESSAGE, categoryId));
         }
     }
 
@@ -70,7 +72,7 @@ public class CategoryServiceImpl implements CategoryService {
     @Transactional
     public CategoryDto updateCategoryById(Long categoryId, NewCategoryDto newCategoryDto) {
         Category category = categoryRepository.findById(categoryId).orElseThrow(() -> {
-            throw new NotFoundException(String.format(CategoryConstants.CATEGORY_NOT_FOUND_MESSAGE, categoryId));
+            throw new NotFoundException(String.format(CATEGORY_NOT_FOUND_MESSAGE, categoryId));
         });
 
         category.setName(newCategoryDto.getName());

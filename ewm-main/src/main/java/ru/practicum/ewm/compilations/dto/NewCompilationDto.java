@@ -4,11 +4,10 @@ import lombok.Value;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import java.io.Serializable;
 import java.util.List;
 
 @Value
-public class NewCompilationDto implements Serializable {
+public class NewCompilationDto {
     @NotNull
     Boolean pinned;
     @NotBlank

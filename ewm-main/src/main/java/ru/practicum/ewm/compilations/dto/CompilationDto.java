@@ -3,11 +3,10 @@ package ru.practicum.ewm.compilations.dto;
 import lombok.Value;
 import ru.practicum.ewm.events.dto.EventDto;
 
-import java.io.Serializable;
 import java.util.List;
 
 @Value
-public class CompilationDto implements Serializable {
+public class CompilationDto {
     Long id;
     Boolean pinned;
     String title;

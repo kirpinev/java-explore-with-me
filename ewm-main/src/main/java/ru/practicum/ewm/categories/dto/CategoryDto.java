@@ -2,10 +2,8 @@ package ru.practicum.ewm.categories.dto;
 
 import lombok.Value;
 
-import java.io.Serializable;
-
 @Value
-public class CategoryDto implements Serializable {
+public class CategoryDto {
     Long id;
     String name;
 }

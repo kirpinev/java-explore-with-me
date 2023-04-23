@@ -6,13 +6,12 @@ import lombok.Value;
 import lombok.extern.jackson.Jacksonized;
 
 import javax.validation.constraints.NotBlank;
-import java.io.Serializable;
 
 @Value
 @Builder
 @AllArgsConstructor
 @Jacksonized
-public class NewCategoryDto implements Serializable {
+public class NewCategoryDto {
     @NotBlank
     String name;
 }

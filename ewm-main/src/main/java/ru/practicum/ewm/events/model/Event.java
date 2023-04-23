@@ -14,7 +14,6 @@ import java.time.LocalDateTime;
 @Table(name = "events")
 @Getter
 @Setter
-@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 public class Event {
@@ -23,7 +22,7 @@ public class Event {
     private Long id;
     @Column(name = "annotation", nullable = false)
     private String annotation;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id")
     private Category category;
     @Column(name = "confirmed_requests", nullable = false)
@@ -35,10 +34,10 @@ public class Event {
     private String description;
     @Column(name = "event_date", nullable = false)
     private LocalDateTime eventDate;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "initiator_id")
     private User initiator;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "location_id")
     private Location location;
     @Column(name = "paid", nullable = false)

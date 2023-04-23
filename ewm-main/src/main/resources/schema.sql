@@ -74,3 +74,17 @@ create table if not exists requests
     foreign key (requester_id) references users (id) on delete cascade,
     constraint unique_request unique (event_id, requester_id)
 );
+
+create index if not exists idx_compilations_pinned on compilations (pinned);
+
+create index if not exists idx_events_initiator_id on events (initiator_id);
+create index if not exists idx_events_state on events (state);
+create index if not exists idx_events_category_id on events (category_id);
+create index if not exists idx_events_event_date on events (event_date);
+create index if not exists idx_events_description on events (description);
+create index if not exists idx_events_annotation on events (annotation);
+create index if not exists idx_events_paid on events (paid);
+
+create index if not exists idx_requests_event_id on requests (event_id);
+
+create index if not exists idx_users_id on users (id);

@@ -4,15 +4,18 @@ import lombok.*;
 import ru.practicum.ewm.events.model.Event;
 
 import javax.persistence.*;
-import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "compilations")
 @Getter
 @Setter
-@ToString
 @NoArgsConstructor
 @AllArgsConstructor
+@NamedEntityGraph(
+        name = "compilation-with-events",
+        attributeNodes = @NamedAttributeNode("events")
+)
 public class Compilation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,12 +24,11 @@ public class Compilation {
     private String title;
     @Column(name = "pinned", nullable = false)
     private Boolean pinned;
-    @ManyToMany
-    @ToString.Exclude
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "compilation_events",
             joinColumns = @JoinColumn(name = "compilation_id"),
             inverseJoinColumns = @JoinColumn(name = "event_id")
     )
-    private List<Event> events;
+    private Set<Event> events;
 }

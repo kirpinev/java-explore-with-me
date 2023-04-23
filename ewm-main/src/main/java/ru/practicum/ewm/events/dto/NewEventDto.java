@@ -10,14 +10,13 @@ import ru.practicum.ewm.location.dto.LocationDto;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @Value
 @Builder
 @AllArgsConstructor
 @Jacksonized
-public class NewEventDto implements Serializable {
+public class NewEventDto {
     @NotBlank
     @Size(min = 20, max = 2000)
     String annotation;

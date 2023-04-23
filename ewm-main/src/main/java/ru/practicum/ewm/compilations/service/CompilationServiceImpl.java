@@ -13,6 +13,7 @@ import ru.practicum.ewm.events.model.Event;
 import ru.practicum.ewm.events.repository.EventRepository;
 import ru.practicum.ewm.exception.NotFoundException;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 
@@ -36,7 +37,7 @@ public class CompilationServiceImpl implements CompilationService {
     @Override
     @Transactional(readOnly = true)
     public CompilationDto getCompilationById(Long compId) {
-        Compilation compilation = compilationRepository.findById(compId)
+        Compilation compilation = compilationRepository.findCompilationById(compId)
                 .orElseThrow(() -> new NotFoundException(String.format(CompilationConstants.COMPILATION_NOT_FOUND_MESSAGE, compId)));
 
         return CompilationMapper.toCompilationDto(compilation);
@@ -57,7 +58,7 @@ public class CompilationServiceImpl implements CompilationService {
     @Override
     @Transactional
     public CompilationDto update(Long compId, NewCompilationDto newCompilationDto) {
-        Compilation compilation = compilationRepository.findById(compId)
+        Compilation compilation = compilationRepository.findCompilationById(compId)
                 .orElseThrow(() -> new NotFoundException(String.format(CompilationConstants.COMPILATION_NOT_FOUND_MESSAGE, compId)));
         List<Event> events = eventRepository.findAllById(newCompilationDto.getEvents());
 
@@ -65,7 +66,7 @@ public class CompilationServiceImpl implements CompilationService {
                 compilation.getTitle()));
         compilation.setPinned(Objects.requireNonNullElse(newCompilationDto.getPinned(),
                 compilation.getPinned()));
-        compilation.setEvents(events);
+        compilation.setEvents(new HashSet<>(events));
 
         return CompilationMapper.toCompilationDto(compilation);
     }

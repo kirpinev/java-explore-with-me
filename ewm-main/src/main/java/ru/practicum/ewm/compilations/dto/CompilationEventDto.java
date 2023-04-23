@@ -3,10 +3,9 @@ package ru.practicum.ewm.compilations.dto;
 import lombok.Value;
 
 import javax.validation.constraints.NotNull;
-import java.io.Serializable;
 
 @Value
-public class CompilationEventDto implements Serializable {
+public class CompilationEventDto {
     @NotNull
     Long compilationId;
     @NotNull
