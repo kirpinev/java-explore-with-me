@@ -24,6 +24,7 @@ public class CompilationServiceImpl implements CompilationService {
     private final CompilationRepository compilationRepository;
     private final EventRepository eventRepository;
 
+    private static final String COMPILATION_NOT_FOUND_MESSAGE = "Compilation with id=%s was not found";
 
     @Override
     @Transactional(readOnly = true)
@@ -38,7 +39,7 @@ public class CompilationServiceImpl implements CompilationService {
     @Transactional(readOnly = true)
     public CompilationDto getCompilationById(Long compId) {
         Compilation compilation = compilationRepository.findCompilationById(compId)
-                .orElseThrow(() -> new NotFoundException(String.format(CompilationConstants.COMPILATION_NOT_FOUND_MESSAGE, compId)));
+                .orElseThrow(() -> new NotFoundException(String.format(COMPILATION_NOT_FOUND_MESSAGE, compId)));
 
         return CompilationMapper.toCompilationDto(compilation);
     }
@@ -59,7 +60,7 @@ public class CompilationServiceImpl implements CompilationService {
     @Transactional
     public CompilationDto update(Long compId, NewCompilationDto newCompilationDto) {
         Compilation compilation = compilationRepository.findCompilationById(compId)
-                .orElseThrow(() -> new NotFoundException(String.format(CompilationConstants.COMPILATION_NOT_FOUND_MESSAGE, compId)));
+                .orElseThrow(() -> new NotFoundException(String.format(COMPILATION_NOT_FOUND_MESSAGE, compId)));
         List<Event> events = eventRepository.findAllById(newCompilationDto.getEvents());
 
         compilation.setTitle(Objects.requireNonNullElse(newCompilationDto.getTitle(),
@@ -77,7 +78,7 @@ public class CompilationServiceImpl implements CompilationService {
         Integer integer = compilationRepository.deleteCompilationById(compId);
 
         if (integer == 0) {
-            throw new NotFoundException(String.format(CompilationConstants.COMPILATION_NOT_FOUND_MESSAGE, compId));
+            throw new NotFoundException(String.format(COMPILATION_NOT_FOUND_MESSAGE, compId));
         }
     }
 }

@@ -16,6 +16,14 @@ import java.time.LocalDateTime;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@NamedEntityGraph(
+        name = "event",
+        attributeNodes = {
+                @NamedAttributeNode(value = "category"),
+                @NamedAttributeNode(value = "initiator"),
+                @NamedAttributeNode(value = "location"),
+        }
+)
 public class Event {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

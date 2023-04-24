@@ -19,6 +19,8 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
 
+    private static final String USER_NOT_FOUND_MESSAGE = "User with id=%s was not found";
+
     @Override
     @Transactional
     public UserDto create(NewUserDto newUserDto) {
@@ -42,7 +44,7 @@ public class UserServiceImpl implements UserService {
         Integer integer = userRepository.deleteUserById(userId);
 
         if (integer == 0) {
-            throw new NotFoundException(String.format(UserConstants.USER_NOT_FOUND_MESSAGE, userId));
+            throw new NotFoundException(String.format(USER_NOT_FOUND_MESSAGE, userId));
         }
     }
 }

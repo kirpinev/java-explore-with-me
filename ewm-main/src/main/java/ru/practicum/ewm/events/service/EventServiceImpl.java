@@ -34,6 +34,16 @@ public class EventServiceImpl implements EventService {
 
     private final StatisticClient statisticClient;
 
+    private static final String EVENT_NOT_FOUND_MESSAGE = "Event with id=%s was not found";
+    private static final String OPERATION_EXCEPTION_MESSAGE = "Field: eventDate. Error: должно содержать дату, " +
+            "которая еще не наступила. Value: %s";
+    private static final String EVENT_UPDATE_PUBLISHED_MESSAGE = "Cannot update the event because " +
+            "it's not in the right state: %s";
+    private static final String EVENT_STATE_EXCEPTION_MESSAGE = "Cannot publish the event because " +
+            "it's not in the right state: %s";
+    private static final String EVENT_CANCEL_EXCEPTION_MESSAGE = "Cannot cancel the event because " +
+            "it's not in the right state: %s";
+
     @Override
     @Transactional
     public EventDto create(NewEventDto newEventDto, LocationDto locationDto,
@@ -82,8 +92,8 @@ public class EventServiceImpl implements EventService {
     @Override
     @Transactional
     public EventDto updateEventByEventId(Long eventId, NewEventDto newEventDto) {
-        Event event = eventRepository.findById(eventId)
-                .orElseThrow(() -> new NotFoundException(String.format(EventConstants.EVENT_NOT_FOUND_MESSAGE, eventId)));
+        Event event = eventRepository.findEventById(eventId)
+                .orElseThrow(() -> new NotFoundException(String.format(EVENT_NOT_FOUND_MESSAGE, eventId)));
 
         if (newEventDto == null) {
             return EventMapper.toEventDto(event);
@@ -144,7 +154,7 @@ public class EventServiceImpl implements EventService {
 
     private void validateEventDate(LocalDateTime eventDate, LocalDateTime limit) {
         if (eventDate != null && eventDate.isBefore(limit)) {
-            String error = String.format(EventConstants.OPERATION_EXCEPTION_MESSAGE, eventDate);
+            String error = String.format(OPERATION_EXCEPTION_MESSAGE, eventDate);
             throw new OperationException(error);
         }
     }
@@ -153,7 +163,7 @@ public class EventServiceImpl implements EventService {
         if (event.getCreatedOn() != null
                 && eventDate != null
                 && eventDate.plusHours(1).isBefore(event.getCreatedOn())) {
-            String error = String.format(EventConstants.OPERATION_EXCEPTION_MESSAGE, eventDate);
+            String error = String.format(OPERATION_EXCEPTION_MESSAGE, eventDate);
             throw new OperationException(error);
         }
     }
@@ -162,7 +172,7 @@ public class EventServiceImpl implements EventService {
         State stateAction = newEventDto.getStateAction();
 
         if (stateAction == null && event.getState().equals(State.PUBLISHED)) {
-            throw new OperationException(String.format(EventConstants.EVENT_UPDATE_PUBLISHED_MESSAGE,
+            throw new OperationException(String.format(EVENT_UPDATE_PUBLISHED_MESSAGE,
                     event.getState()));
         }
 
@@ -179,14 +189,14 @@ public class EventServiceImpl implements EventService {
                 break;
             case REJECT_EVENT:
                 if (event.getState().equals(State.PUBLISHED)) {
-                    throw new OperationException(String.format(EventConstants.EVENT_CANCEL_EXCEPTION_MESSAGE,
+                    throw new OperationException(String.format(EVENT_CANCEL_EXCEPTION_MESSAGE,
                             event.getState()));
                 }
                 event.setState(State.CANCELED);
                 break;
             case PUBLISH_EVENT:
                 if (event.getState().equals(State.PUBLISHED) || event.getState().equals(State.CANCELED)) {
-                    throw new OperationException(String.format(EventConstants.EVENT_STATE_EXCEPTION_MESSAGE,
+                    throw new OperationException(String.format(EVENT_STATE_EXCEPTION_MESSAGE,
                             event.getState()));
                 }
                 if (event.getState().equals(State.PENDING)) {
@@ -297,7 +307,7 @@ public class EventServiceImpl implements EventService {
 
     private void checkEventForNull(Event event, Long eventId) {
         if (event == null) {
-            throw new NotFoundException(String.format(EventConstants.EVENT_NOT_FOUND_MESSAGE, eventId));
+            throw new NotFoundException(String.format(EVENT_NOT_FOUND_MESSAGE, eventId));
         }
     }
 }

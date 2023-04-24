@@ -86,5 +86,3 @@ create index if not exists idx_events_annotation on events (annotation);
 create index if not exists idx_events_paid on events (paid);
 
 create index if not exists idx_requests_event_id on requests (event_id);
-
-create index if not exists idx_users_id on users (id);

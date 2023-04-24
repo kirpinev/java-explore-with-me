@@ -14,7 +14,12 @@ import java.util.Set;
 @AllArgsConstructor
 @NamedEntityGraph(
         name = "compilation-with-events",
-        attributeNodes = @NamedAttributeNode("events")
+        attributeNodes = @NamedAttributeNode(value = "events", subgraph = "event"),
+        subgraphs = @NamedSubgraph(name = "event", attributeNodes = {
+                @NamedAttributeNode("category"),
+                @NamedAttributeNode("initiator"),
+                @NamedAttributeNode("location")
+        })
 )
 public class Compilation {
     @Id
