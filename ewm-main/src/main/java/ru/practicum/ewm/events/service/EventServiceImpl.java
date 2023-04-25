@@ -233,6 +233,8 @@ public class EventServiceImpl implements EventService {
     private void sortEvents(SortVariant sortVariant, List<EventDto> eventDtos) {
         Comparator<EventDto> comparatorViews = Comparator.comparing(EventDto::getViews).reversed();
         Comparator<EventDto> comparatorDates = Comparator.comparing(EventDto::getEventDate).reversed();
+        Comparator<EventDto> comparatorLikes = Comparator.comparing(EventDto::getLikes).reversed();
+        Comparator<EventDto> comparatorDislikes = Comparator.comparing(EventDto::getDislikes).reversed();
 
         if (sortVariant == null) {
             return;
@@ -242,6 +244,10 @@ public class EventServiceImpl implements EventService {
             eventDtos.sort(comparatorDates);
         } else if (sortVariant.equals(SortVariant.VIEWS)) {
             eventDtos.sort(comparatorViews);
+        } else if (sortVariant.equals(SortVariant.LIKES)) {
+            eventDtos.sort(comparatorLikes);
+        } else if (sortVariant.equals(SortVariant.DISLIKES)) {
+            eventDtos.sort(comparatorDislikes);
         }
     }
 

@@ -6,9 +6,12 @@ import ru.practicum.ewm.categories.model.Category;
 import ru.practicum.ewm.events.dto.State;
 import ru.practicum.ewm.location.model.Location;
 import ru.practicum.ewm.users.model.User;
+import ru.practicum.ewm.votes.model.Vote;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "events")
@@ -22,6 +25,7 @@ import java.time.LocalDateTime;
                 @NamedAttributeNode(value = "category"),
                 @NamedAttributeNode(value = "initiator"),
                 @NamedAttributeNode(value = "location"),
+                @NamedAttributeNode(value = "votes"),
         }
 )
 public class Event {
@@ -60,4 +64,7 @@ public class Event {
     private State state;
     @Column(name = "title", nullable = false)
     private String title;
+    @OneToMany(fetch = FetchType.LAZY)
+    @JoinColumn(name = "event_id")
+    private Set<Vote> votes = new HashSet<>();
 }
