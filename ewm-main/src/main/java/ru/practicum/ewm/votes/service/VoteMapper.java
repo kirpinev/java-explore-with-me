@@ -2,6 +2,7 @@ package ru.practicum.ewm.votes.service;
 
 import ru.practicum.ewm.votes.dto.VoteDto;
 import ru.practicum.ewm.votes.model.Vote;
+import ru.practicum.ewm.votes.model.VoteType;
 
 public class VoteMapper {
 
@@ -13,7 +14,7 @@ public class VoteMapper {
                 vote.getEventId(),
                 vote.getUserId(),
                 vote.getInitiatorId(),
-                vote.getVoteType());
+                vote.getVoteType().name());
     }
 
     public static Vote toVote(VoteDto voteDto) {
@@ -21,6 +22,6 @@ public class VoteMapper {
                 voteDto.getEventId(),
                 voteDto.getUserId(),
                 voteDto.getInitiatorId(),
-                voteDto.getVoteType());
+                VoteType.valueOf(voteDto.getVoteType()));
     }
 }

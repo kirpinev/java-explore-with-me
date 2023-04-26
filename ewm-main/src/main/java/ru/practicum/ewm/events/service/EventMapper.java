@@ -11,8 +11,6 @@ import ru.practicum.ewm.location.model.Location;
 import ru.practicum.ewm.users.dto.UserDto;
 import ru.practicum.ewm.users.dto.UserShortDto;
 import ru.practicum.ewm.users.model.User;
-import ru.practicum.ewm.votes.dto.VoteType;
-import ru.practicum.ewm.votes.model.Vote;
 
 import java.util.List;
 import java.util.Map;
@@ -102,16 +100,6 @@ public class EventMapper {
         NewLocationDto newLocationDto = new NewLocationDto(
                 event.getLocation().getLat(),
                 event.getLocation().getLon());
-        int likes = 0;
-        int dislikes = 0;
-
-        for (Vote vote : event.getVotes()) {
-            if (vote.getVoteType().equals(VoteType.LIKE)) {
-                likes += 1;
-            } else {
-                dislikes += 1;
-            }
-        }
 
         return new EventDto(
                 event.getId(),
@@ -130,8 +118,8 @@ public class EventMapper {
                 event.getState(),
                 event.getTitle(),
                 hits,
-                likes,
-                dislikes);
+                event.getLikes(),
+                event.getDislikes());
     }
 
     public static List<EventDto> toEventDto(List<Event> events, Map<String, Long> eventViews) {

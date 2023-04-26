@@ -2,16 +2,14 @@ package ru.practicum.ewm.events.model;
 
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.Formula;
 import ru.practicum.ewm.categories.model.Category;
 import ru.practicum.ewm.events.dto.State;
 import ru.practicum.ewm.location.model.Location;
 import ru.practicum.ewm.users.model.User;
-import ru.practicum.ewm.votes.model.Vote;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.HashSet;
-import java.util.Set;
 
 @Entity
 @Table(name = "events")
@@ -25,7 +23,6 @@ import java.util.Set;
                 @NamedAttributeNode(value = "category"),
                 @NamedAttributeNode(value = "initiator"),
                 @NamedAttributeNode(value = "location"),
-                @NamedAttributeNode(value = "votes"),
         }
 )
 public class Event {
@@ -64,7 +61,8 @@ public class Event {
     private State state;
     @Column(name = "title", nullable = false)
     private String title;
-    @OneToMany(fetch = FetchType.LAZY)
-    @JoinColumn(name = "event_id")
-    private Set<Vote> votes = new HashSet<>();
+    @Formula("(SELECT COUNT(*) FROM votes v WHERE v.vote_type = 0 AND v.event_id = id)")
+    private Integer likes;
+    @Formula("(SELECT COUNT(*) FROM votes v WHERE v.vote_type = 1 AND v.event_id = id)")
+    private Integer dislikes;
 }

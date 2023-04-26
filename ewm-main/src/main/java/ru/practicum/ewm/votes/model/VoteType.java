@@ -1,4 +1,4 @@
-package ru.practicum.ewm.votes.dto;
+package ru.practicum.ewm.votes.model;
 
 public enum VoteType {
     LIKE,

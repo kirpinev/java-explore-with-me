@@ -1,7 +1,6 @@
 package ru.practicum.ewm.votes.model;
 
 import lombok.*;
-import ru.practicum.ewm.votes.dto.VoteType;
 
 import javax.persistence.*;
 

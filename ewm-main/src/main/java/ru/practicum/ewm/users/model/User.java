@@ -1,11 +1,9 @@
 package ru.practicum.ewm.users.model;
 
 import lombok.*;
-import ru.practicum.ewm.votes.model.Vote;
+import org.hibernate.annotations.Formula;
 
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
 
 @Entity
 @Table(name = "users")
@@ -13,10 +11,7 @@ import java.util.Set;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@NamedEntityGraph(
-        name = "user-with-votes",
-        attributeNodes = @NamedAttributeNode(value = "votes")
-)
+@NamedEntityGraph(name = "user")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,7 +20,7 @@ public class User {
     private String name;
     @Column(name = "email", nullable = false, unique = true)
     private String email;
-    @OneToMany(fetch = FetchType.LAZY)
-    @JoinColumn(name = "initiator_id")
-    private Set<Vote> votes = new HashSet<>();
+    @Formula("((SELECT COUNT(*) FROM votes v WHERE v.vote_type = 0 AND v.initiator_id = id) " +
+            "- (SELECT COUNT(*) FROM votes v WHERE v.vote_type = 1 AND v.initiator_id = id))")
+    private Integer rating;
 }
