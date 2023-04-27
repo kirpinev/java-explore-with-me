@@ -54,6 +54,7 @@ public interface EventRepository extends JpaRepository<Event, Long> {
                                 @Param("rangeStart") LocalDateTime rangeStart,
                                 @Param("rangeEnd") LocalDateTime rangeEnd);
 
+
     @EntityGraph(value = "event")
     Event findEventByIdAndState(Long id, State state);
 

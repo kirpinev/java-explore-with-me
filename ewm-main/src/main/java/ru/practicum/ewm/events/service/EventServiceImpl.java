@@ -3,6 +3,7 @@ package ru.practicum.ewm.events.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.practicum.ewm.StatisticClient;
@@ -128,15 +129,17 @@ public class EventServiceImpl implements EventService {
                                           Boolean onlyAvailable, String ip, String url) {
         createNewHit(ip, url);
 
-        Pageable pageable = PageRequest.of(from, size);
-        List<Event> events = eventRepository
-                .getPublicEvents(pageable, state, text, categories, paid, rangeStart, rangeEnd);
+        String sortValue = getSortValue(sortVariant);
+        Pageable pageable = PageRequest.of(from, size, sortValue == null
+                ? Sort.unsorted() : Sort.by(Sort.Direction.DESC, sortValue));
+        List<Event> events = eventRepository.getPublicEvents(pageable, state, text, categories,
+                paid, rangeStart, rangeEnd);
         List<Long> eventIds = events.stream().map(Event::getId).collect(Collectors.toList());
         List<RequestStat> requestStats = requestRepository.getRequestsStats(eventIds);
         Map<String, Long> eventViewsMap = getEventViewsMap(getEventsViewsList(events));
         List<EventDto> eventDtos = EventMapper.toEventDto(events, eventViewsMap);
 
-        sortEvents(sortVariant, eventDtos);
+        sortEventsByViews(sortVariant, eventDtos);
 
         return filterEventsByAvailable(eventDtos, requestStats, onlyAvailable);
     }
@@ -230,18 +233,24 @@ public class EventServiceImpl implements EventService {
         statisticClient.createHit(endpointHitDto);
     }
 
-    private void sortEvents(SortVariant sortVariant, List<EventDto> eventDtos) {
+    private void sortEventsByViews(SortVariant sortVariant, List<EventDto> eventDtos) {
         Comparator<EventDto> comparatorViews = Comparator.comparing(EventDto::getViews).reversed();
-        Comparator<EventDto> comparatorDates = Comparator.comparing(EventDto::getEventDate).reversed();
 
-        if (sortVariant == null) {
-            return;
-        }
-
-        if (sortVariant.equals(SortVariant.EVENT_DATE)) {
-            eventDtos.sort(comparatorDates);
-        } else if (sortVariant.equals(SortVariant.VIEWS)) {
+        if (sortVariant.equals(SortVariant.VIEWS)) {
             eventDtos.sort(comparatorViews);
+        }
+    }
+
+    private String getSortValue(SortVariant sortVariant) {
+        switch (sortVariant) {
+            case LIKES:
+                return SortVariant.LIKES.toLowerCamelCase();
+            case DISLIKES:
+                return SortVariant.DISLIKES.toLowerCamelCase();
+            case EVENT_DATE:
+                return SortVariant.EVENT_DATE.toLowerCamelCase();
+            default:
+                return null;
         }
     }
 

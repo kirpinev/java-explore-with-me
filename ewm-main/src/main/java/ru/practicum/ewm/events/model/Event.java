@@ -2,6 +2,7 @@ package ru.practicum.ewm.events.model;
 
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.Formula;
 import ru.practicum.ewm.categories.model.Category;
 import ru.practicum.ewm.events.dto.State;
 import ru.practicum.ewm.location.model.Location;
@@ -60,4 +61,8 @@ public class Event {
     private State state;
     @Column(name = "title", nullable = false)
     private String title;
+    @Formula("(SELECT COUNT(*) FROM votes v WHERE v.vote_type = 0 AND v.event_id = id)")
+    private Integer likes;
+    @Formula("(SELECT COUNT(*) FROM votes v WHERE v.vote_type = 1 AND v.event_id = id)")
+    private Integer dislikes;
 }

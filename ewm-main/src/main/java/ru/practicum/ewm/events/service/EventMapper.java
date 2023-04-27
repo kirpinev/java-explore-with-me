@@ -85,7 +85,9 @@ public class EventMapper {
                 event.getRequestModeration(),
                 event.getState(),
                 event.getTitle(),
-                0L);
+                0L,
+                0,
+                0);
     }
 
     public static EventDto toEventDto(Event event, Long hits) {
@@ -115,7 +117,9 @@ public class EventMapper {
                 event.getRequestModeration(),
                 event.getState(),
                 event.getTitle(),
-                hits);
+                hits,
+                event.getLikes(),
+                event.getDislikes());
     }
 
     public static List<EventDto> toEventDto(List<Event> events, Map<String, Long> eventViews) {

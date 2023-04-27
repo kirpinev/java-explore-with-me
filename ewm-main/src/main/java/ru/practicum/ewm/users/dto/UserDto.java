@@ -7,4 +7,5 @@ public class UserDto {
     Long id;
     String name;
     String email;
+    Integer rating;
 }

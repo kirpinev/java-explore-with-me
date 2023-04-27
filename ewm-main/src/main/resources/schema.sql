@@ -75,6 +75,18 @@ create table if not exists requests
     constraint unique_request unique (event_id, requester_id)
 );
 
+create table if not exists votes
+(
+    user_id      bigint,
+    event_id     bigint,
+    initiator_id bigint,
+    vote_type    int not null,
+    primary key (user_id, event_id),
+    foreign key (initiator_id) references users (id) on delete cascade,
+    foreign key (user_id) references users (id) on delete cascade,
+    foreign key (event_id) references events (id) on delete cascade
+);
+
 create index if not exists idx_compilations_pinned on compilations (pinned);
 
 create index if not exists idx_events_initiator_id on events (initiator_id);
