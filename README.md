@@ -91,7 +91,3 @@ Run the application using the following command:
 
 The application will start on port 8080. Access the public API at `http://localhost:8080`, and the administrative API
 at `http://localhost:8080/admin`.
-
-## License
-
-This project is licensed under the MIT License.
