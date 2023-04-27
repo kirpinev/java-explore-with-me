@@ -53,7 +53,7 @@ public class CategoryControllerTest {
 
     @Test
     void getCategories() throws Exception {
-        when(categoryService.getCategories(anyInt(), anyInt())).thenReturn(List.of(categoryDto));
+        when(categoryService.get(anyInt(), anyInt())).thenReturn(List.of(categoryDto));
 
         mvc.perform(get("/categories")
                         .characterEncoding(StandardCharsets.UTF_8)
@@ -68,7 +68,7 @@ public class CategoryControllerTest {
 
     @Test
     void getCategoryById() throws Exception {
-        when(categoryService.getCategoryById(anyLong(), anyInt(), anyInt())).thenReturn(categoryDto);
+        when(categoryService.getById(anyLong(), anyInt(), anyInt())).thenReturn(categoryDto);
 
         mvc.perform(get("/categories/{id}", 1)
                         .characterEncoding(StandardCharsets.UTF_8)
@@ -89,7 +89,7 @@ public class CategoryControllerTest {
 
     @Test
     void updateCategoryById() throws Exception {
-        when(categoryService.updateCategoryById(anyLong(), any(NewCategoryDto.class)))
+        when(categoryService.updateById(anyLong(), any(NewCategoryDto.class)))
                 .thenReturn(categoryDto);
 
         mvc.perform(patch("/admin/categories/{id}", 1)

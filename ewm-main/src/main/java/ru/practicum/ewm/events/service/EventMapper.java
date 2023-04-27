@@ -50,6 +50,7 @@ public class EventMapper {
         event.setRequestModeration(newEventDto.getRequestModeration());
         event.setTitle(newEventDto.getTitle());
         event.setState(newEventDto.getStateAction());
+        event.setConfirmedRequests(0);
 
         event.setLocation(location);
         event.setCategory(category);

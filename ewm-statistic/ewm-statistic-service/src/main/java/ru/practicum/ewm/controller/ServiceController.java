@@ -21,7 +21,7 @@ public class ServiceController {
     @PostMapping("/hit")
     @ResponseStatus(HttpStatus.CREATED)
     public CreatedEndpointHitDto create(@RequestBody @Valid EndpointHitDto endpointHitDto) {
-        return endpointHitService.createdEndpointHitDto(endpointHitDto);
+        return endpointHitService.create(endpointHitDto);
     }
 
     @GetMapping("/stats")
@@ -29,6 +29,6 @@ public class ServiceController {
                                       @RequestParam("end") LocalDateTime end,
                                       @RequestParam(value = "uris", required = false, defaultValue = "") List<String> uris,
                                       @RequestParam(value = "unique", required = false, defaultValue = "false") Boolean unique) {
-        return endpointHitService.getStats(start, end, uris, unique);
+        return endpointHitService.getAll(start, end, uris, unique);
     }
 }

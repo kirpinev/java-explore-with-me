@@ -35,7 +35,7 @@ public class CategoryServiceIntegrationTest {
     void getCategories() {
         categoryService.create(newCategoryDto);
 
-        List<CategoryDto> categoryDtos = categoryService.getCategories(0, 1);
+        List<CategoryDto> categoryDtos = categoryService.get(0, 1);
 
         Assertions.assertNotNull(categoryDtos);
         Assertions.assertEquals(1, categoryDtos.size());
@@ -47,7 +47,7 @@ public class CategoryServiceIntegrationTest {
     void getCategoriesById() {
         categoryService.create(newCategoryDto);
 
-        CategoryDto findCategory = categoryService.getCategoryById(1L, 0, 1);
+        CategoryDto findCategory = categoryService.getById(1L, 0, 1);
 
         Assertions.assertNotNull(findCategory);
         Assertions.assertEquals(1L, findCategory.getId());
@@ -58,15 +58,15 @@ public class CategoryServiceIntegrationTest {
     void deleteCategoryById() {
         categoryService.create(newCategoryDto);
 
-        CategoryDto findCategory = categoryService.getCategoryById(1L, 0, 1);
+        CategoryDto findCategory = categoryService.getById(1L, 0, 1);
 
         Assertions.assertNotNull(findCategory);
         Assertions.assertEquals(1L, findCategory.getId());
         Assertions.assertEquals(newCategoryDto.getName(), findCategory.getName());
 
-        categoryService.deleteCategoryById(1L);
+        categoryService.deleteById(1L);
 
-        List<CategoryDto> deletedCategories = categoryService.getCategories(0, 1);
+        List<CategoryDto> deletedCategories = categoryService.get(0, 1);
 
         Assertions.assertNotNull(deletedCategories);
         Assertions.assertEquals(0, deletedCategories.size());
@@ -75,7 +75,7 @@ public class CategoryServiceIntegrationTest {
     @Test
     void getCategoryByWrongId() {
         Assertions.assertThrows(NotFoundException.class,
-                () -> categoryService.getCategoryById(10L, 0, 1));
+                () -> categoryService.getById(10L, 0, 1));
     }
 
     @Test
@@ -83,12 +83,12 @@ public class CategoryServiceIntegrationTest {
         NewCategoryDto newCategoryDto = new NewCategoryDto("Концерты");
 
         Assertions.assertThrows(NotFoundException.class,
-                () -> categoryService.updateCategoryById(10L, newCategoryDto));
+                () -> categoryService.updateById(10L, newCategoryDto));
     }
 
     @Test
     void deleteCategoryByWrongId() {
         Assertions.assertThrows(NotFoundException.class,
-                () -> categoryService.deleteCategoryById(10L));
+                () -> categoryService.deleteById(10L));
     }
 }

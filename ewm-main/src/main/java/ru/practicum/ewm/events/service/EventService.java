@@ -16,20 +16,20 @@ public interface EventService {
             UserDto userDto,
             CategoryDto categoryDto);
 
-    List<EventDto> getEventsByUserId(Long userId, Integer from, Integer size);
+    List<EventDto> getAllByUserId(Long userId, Integer from, Integer size);
 
-    EventDto getEventByUserIdAndEventId(Long userId, Long eventId);
+    EventDto getByUserIdAndEventId(Long userId, Long eventId);
 
-    EventDto updateEventByUserIdAndEventId(Long userId, Long eventId, NewEventDto newEventDto);
+    EventDto updateByUserIdAndEventId(Long userId, Long eventId, NewEventDto newEventDto);
 
-    EventDto updateEventByEventId(Long eventId, NewEventDto newEventDto);
+    EventDto updateByEventId(Long eventId, NewEventDto newEventDto);
 
-    List<EventDto> getEvents(LocalDateTime rangeStart, LocalDateTime rangeEnd, List<Long> users,
-                             List<State> states, List<Long> categories, Integer from, Integer size);
+    List<EventDto> getAll(LocalDateTime rangeStart, LocalDateTime rangeEnd, List<Long> users,
+                          List<State> states, List<Long> categories, Integer from, Integer size);
 
-    List<EventDto> getPublicEvents(Integer from, Integer size, State state,
-                                   String text, List<Long> categories, Boolean paid, LocalDateTime rangeStart,
-                                   LocalDateTime rangeEnd, SortVariant sort, Boolean onlyAvailable, String ip, String uri);
+    List<EventDto> getAllPublic(Integer from, Integer size, State state,
+                                String text, List<Long> categories, Boolean paid, LocalDateTime rangeStart,
+                                LocalDateTime rangeEnd, SortVariant sort, Boolean onlyAvailable, String ip, String uri);
 
-    EventDto getPublicEventById(Long eventId, String ip, String url);
+    EventDto getPublicById(Long eventId, String ip, String url);
 }

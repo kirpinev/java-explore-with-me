@@ -29,7 +29,7 @@ public class EndpointHitServiceIntegrationTest {
     @Test
     void createNewHit() {
         CreatedEndpointHitDto createdEndpointHitDto = endpointHitService
-                .createdEndpointHitDto(endpointHitDto);
+                .create(endpointHitDto);
 
         Assertions.assertEquals(1L, createdEndpointHitDto.getId());
         Assertions.assertEquals(endpointHitDto.getApp(), createdEndpointHitDto.getApp());

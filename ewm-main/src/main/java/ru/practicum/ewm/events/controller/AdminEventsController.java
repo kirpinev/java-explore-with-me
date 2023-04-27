@@ -19,7 +19,7 @@ public class AdminEventsController {
     @PatchMapping("/admin/events/{eventId}")
     public EventDto updateEventByUserIdAndEventId(@PathVariable("eventId") Long eventId,
                                                   @RequestBody(required = false) NewEventDto newEventDto) {
-        return eventService.updateEventByEventId(eventId, newEventDto);
+        return eventService.updateByEventId(eventId, newEventDto);
     }
 
     @GetMapping("/admin/events")
@@ -37,6 +37,6 @@ public class AdminEventsController {
                                     Integer from,
                                     @RequestParam(value = "size", required = false, defaultValue = "10")
                                     Integer size) {
-        return eventService.getEvents(rangeStart, rangeEnd, users, states, categories, from, size);
+        return eventService.getAll(rangeStart, rangeEnd, users, states, categories, from, size);
     }
 }

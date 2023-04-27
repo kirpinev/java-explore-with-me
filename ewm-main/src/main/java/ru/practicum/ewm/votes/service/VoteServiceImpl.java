@@ -46,7 +46,7 @@ public class VoteServiceImpl implements VoteService {
 
     @Override
     @Transactional
-    public void deleteVoteByUserIdAndEventId(Long userId, Long eventId) {
+    public void deleteByUserIdAndEventId(Long userId, Long eventId) {
         Integer integer = voteRepository.deleteVoteByUserIdAndEventId(userId, eventId);
 
         if (integer == 0) {

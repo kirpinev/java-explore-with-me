@@ -66,7 +66,7 @@ public class EndpointHitServiceImplTest {
     void createNewHit() {
         when(endpointHitRepository.save(any(EndpointHit.class))).thenReturn(endpointHit);
 
-        CreatedEndpointHitDto created = endpointHitService.createdEndpointHitDto(endpointHitDto);
+        CreatedEndpointHitDto created = endpointHitService.create(endpointHitDto);
 
         Assertions.assertNotNull(created);
         Assertions.assertEquals(createdEndpointHitDto.getId(), created.getId());
@@ -82,7 +82,7 @@ public class EndpointHitServiceImplTest {
                 .thenReturn(List.of(viewStat));
 
         List<ViewStatDto> viewStatDtos = endpointHitService
-                .getStats(LocalDateTime.now(), LocalDateTime.now(), new ArrayList<>(), false);
+                .getAll(LocalDateTime.now(), LocalDateTime.now(), new ArrayList<>(), false);
 
         Assertions.assertNotNull(viewStatDtos);
         Assertions.assertEquals(viewStatDto.getApp(), viewStatDtos.get(0).getApp());
@@ -97,7 +97,7 @@ public class EndpointHitServiceImplTest {
                 .thenReturn(List.of(viewStat));
 
         List<ViewStatDto> viewStatDtos = endpointHitService
-                .getStats(LocalDateTime.now(), LocalDateTime.now(), new ArrayList<>(), false);
+                .getAll(LocalDateTime.now(), LocalDateTime.now(), new ArrayList<>(), false);
 
         Assertions.assertNotNull(viewStatDtos);
         Assertions.assertEquals(viewStatDto.getApp(), viewStatDtos.get(0).getApp());
@@ -112,7 +112,7 @@ public class EndpointHitServiceImplTest {
                 .thenReturn(List.of(viewStat));
 
         List<ViewStatDto> viewStatDtos = endpointHitService
-                .getStats(LocalDateTime.now(), LocalDateTime.now(), List.of("/event"), true);
+                .getAll(LocalDateTime.now(), LocalDateTime.now(), List.of("/event"), true);
 
         Assertions.assertNotNull(viewStatDtos);
         Assertions.assertEquals(viewStatDto.getApp(), viewStatDtos.get(0).getApp());

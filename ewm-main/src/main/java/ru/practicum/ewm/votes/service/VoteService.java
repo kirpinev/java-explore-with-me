@@ -6,5 +6,5 @@ public interface VoteService {
 
     VoteDto create(VoteDto newVoteDto);
 
-    void deleteVoteByUserIdAndEventId(Long userId, Long eventId);
+    void deleteByUserIdAndEventId(Long userId, Long eventId);
 }
