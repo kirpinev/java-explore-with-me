@@ -60,7 +60,7 @@ public class CategoryServiceImplTest {
         when(categoryRepository.findAll(any(PageRequest.class)))
                 .thenReturn(new PageImpl<>(List.of(category)));
 
-        List<CategoryDto> categoryDtos = categoryService.getCategories(0, 1);
+        List<CategoryDto> categoryDtos = categoryService.get(0, 1);
 
         Assertions.assertNotNull(categoryDtos);
         Assertions.assertEquals(1, categoryDtos.size());
@@ -73,17 +73,17 @@ public class CategoryServiceImplTest {
 
     @Test
     void getCategoryById() {
-        when(categoryRepository.findCategoryById(any(Long.class), any(PageRequest.class)))
+        when(categoryRepository.findById(any(Long.class), any(PageRequest.class)))
                 .thenReturn(List.of(category));
 
-        CategoryDto findCategoryDto = categoryService.getCategoryById(1L, 0, 1);
+        CategoryDto findCategoryDto = categoryService.getById(1L, 0, 1);
 
         Assertions.assertNotNull(findCategoryDto);
         Assertions.assertEquals(categoryDto.getId(), findCategoryDto.getId());
         Assertions.assertEquals(categoryDto.getName(), findCategoryDto.getName());
 
         verify(categoryRepository, times(1))
-                .findCategoryById(anyLong(), any(PageRequest.class));
+                .findById(anyLong(), any(PageRequest.class));
         verifyNoMoreInteractions(categoryRepository);
     }
 
@@ -91,7 +91,7 @@ public class CategoryServiceImplTest {
     void updateCategoryById() {
         when(categoryRepository.findById(anyLong())).thenReturn(Optional.of(category));
 
-        CategoryDto updated = categoryService.updateCategoryById(1L, updatedCategoryDto);
+        CategoryDto updated = categoryService.updateById(1L, updatedCategoryDto);
 
         Assertions.assertNotNull(updated);
         Assertions.assertEquals(updatedCategory.getId(), updated.getId());

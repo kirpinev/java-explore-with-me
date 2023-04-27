@@ -60,7 +60,7 @@ public class EventServiceImpl implements EventService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<EventDto> getEventsByUserId(Long userId, Integer from, Integer size) {
+    public List<EventDto> getAllByUserId(Long userId, Integer from, Integer size) {
         Pageable pageable = PageRequest.of(from, size);
         List<Event> events = eventRepository.findAllByInitiatorId(userId, pageable);
         Map<String, Long> eventViewsMap = getEventViewsMap(getEventsViewsList(events));
@@ -70,7 +70,7 @@ public class EventServiceImpl implements EventService {
 
     @Override
     @Transactional(readOnly = true)
-    public EventDto getEventByUserIdAndEventId(Long userId, Long eventId) {
+    public EventDto getByUserIdAndEventId(Long userId, Long eventId) {
         Event event = getEventByInitiatorIdAndEventId(userId, eventId);
         Map<String, Long> eventViewsMap = getEventViewsMap(getEventsViewsList(List.of(event)));
 
@@ -79,7 +79,7 @@ public class EventServiceImpl implements EventService {
 
     @Override
     @Transactional
-    public EventDto updateEventByUserIdAndEventId(Long userId, Long eventId, NewEventDto newEventDto) {
+    public EventDto updateByUserIdAndEventId(Long userId, Long eventId, NewEventDto newEventDto) {
         validateEventDate(newEventDto.getEventDate(), LocalDateTime.now().plusHours(2));
 
         Event event = getEventByInitiatorIdAndEventId(userId, eventId);
@@ -92,7 +92,7 @@ public class EventServiceImpl implements EventService {
 
     @Override
     @Transactional
-    public EventDto updateEventByEventId(Long eventId, NewEventDto newEventDto) {
+    public EventDto updateByEventId(Long eventId, NewEventDto newEventDto) {
         Event event = eventRepository.findEventById(eventId)
                 .orElseThrow(() -> new NotFoundException(String.format(EVENT_NOT_FOUND_MESSAGE, eventId)));
 
@@ -111,8 +111,8 @@ public class EventServiceImpl implements EventService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<EventDto> getEvents(LocalDateTime rangeStart, LocalDateTime rangeEnd, List<Long> users,
-                                    List<State> states, List<Long> categories, Integer from, Integer size) {
+    public List<EventDto> getAll(LocalDateTime rangeStart, LocalDateTime rangeEnd, List<Long> users,
+                                 List<State> states, List<Long> categories, Integer from, Integer size) {
         Pageable pageable = PageRequest.of(from, size);
         List<Event> events = eventRepository.getEvents(rangeStart, rangeEnd,
                 users, states, categories, pageable);
@@ -123,10 +123,10 @@ public class EventServiceImpl implements EventService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<EventDto> getPublicEvents(Integer from, Integer size, State state,
-                                          String text, List<Long> categories, Boolean paid,
-                                          LocalDateTime rangeStart, LocalDateTime rangeEnd, SortVariant sortVariant,
-                                          Boolean onlyAvailable, String ip, String url) {
+    public List<EventDto> getAllPublic(Integer from, Integer size, State state,
+                                       String text, List<Long> categories, Boolean paid,
+                                       LocalDateTime rangeStart, LocalDateTime rangeEnd, SortVariant sortVariant,
+                                       Boolean onlyAvailable, String ip, String url) {
         createNewHit(ip, url);
 
         String sortValue = getSortValue(sortVariant);
@@ -146,7 +146,7 @@ public class EventServiceImpl implements EventService {
 
     @Override
     @Transactional(readOnly = true)
-    public EventDto getPublicEventById(Long eventId, String ip, String url) {
+    public EventDto getPublicById(Long eventId, String ip, String url) {
         createNewHit(ip, url);
 
         Event event = getEventByEventIdAndState(eventId, State.PUBLISHED);

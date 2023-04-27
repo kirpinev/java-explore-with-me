@@ -35,7 +35,7 @@ public class Event {
     @JoinColumn(name = "category_id")
     private Category category;
     @Column(name = "confirmed_requests", nullable = false)
-    private int confirmedRequests;
+    private Integer confirmedRequests;
     @Column(name = "created_on", nullable = false)
     @CreationTimestamp
     private LocalDateTime createdOn;

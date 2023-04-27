@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 public interface EndpointHitService {
-    CreatedEndpointHitDto createdEndpointHitDto(EndpointHitDto endpointHitDto);
+    CreatedEndpointHitDto create(EndpointHitDto endpointHitDto);
 
-    List<ViewStatDto> getStats(LocalDateTime start, LocalDateTime end, List<String> uris, Boolean unique);
+    List<ViewStatDto> getAll(LocalDateTime start, LocalDateTime end, List<String> uris, Boolean unique);
 }

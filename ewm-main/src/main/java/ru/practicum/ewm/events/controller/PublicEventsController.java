@@ -41,7 +41,7 @@ public class PublicEventsController {
         String ip = request.getRemoteAddr();
         String url = request.getRequestURI();
 
-        return eventService.getPublicEvents(from,
+        return eventService.getAllPublic(from,
                 size,
                 State.PUBLISHED,
                 text,
@@ -61,6 +61,6 @@ public class PublicEventsController {
         String ip = request.getRemoteAddr();
         String url = request.getRequestURI();
 
-        return eventService.getPublicEventById(eventId, ip, url);
+        return eventService.getPublicById(eventId, ip, url);
     }
 }

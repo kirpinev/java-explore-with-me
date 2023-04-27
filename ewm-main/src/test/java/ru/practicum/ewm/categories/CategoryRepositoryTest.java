@@ -65,7 +65,7 @@ public class CategoryRepositoryTest {
         entityManager.flush();
 
         List<Category> categories = categoryRepository
-                .findCategoryById(1L, PageRequest.of(0, 1));
+                .findById(1L, PageRequest.of(0, 1));
 
         Assertions.assertNotNull(categories);
         Assertions.assertEquals(1, categories.size());
@@ -81,7 +81,7 @@ public class CategoryRepositoryTest {
         categoryRepository.deleteCategoryById(1L);
 
         List<Category> categories = categoryRepository
-                .findCategoryById(1L, PageRequest.of(0, 1));
+                .findById(1L, PageRequest.of(0, 1));
 
         Assertions.assertNotNull(categories);
         Assertions.assertEquals(0, categories.size());

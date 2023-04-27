@@ -63,7 +63,7 @@ public class ServiceControllerTest {
 
     @Test
     void createNewHit() throws Exception {
-        when(endpointHitService.createdEndpointHitDto(any(EndpointHitDto.class)))
+        when(endpointHitService.create(any(EndpointHitDto.class)))
                 .thenReturn(createdEndpointHitDto);
 
         mvc.perform(post("/hit")
@@ -79,7 +79,7 @@ public class ServiceControllerTest {
 
     @Test
     void getStats() throws Exception {
-        when(endpointHitService.getStats(any(LocalDateTime.class), any(LocalDateTime.class), any(), any()))
+        when(endpointHitService.getAll(any(LocalDateTime.class), any(LocalDateTime.class), any(), any()))
                 .thenReturn(List.of(viewStatDto));
 
         mvc.perform(get("/stats")

@@ -21,7 +21,7 @@ public class EndpointHitServiceImpl implements EndpointHitService {
 
     @Override
     @Transactional
-    public CreatedEndpointHitDto createdEndpointHitDto(EndpointHitDto endpointHitDto) {
+    public CreatedEndpointHitDto create(EndpointHitDto endpointHitDto) {
         EndpointHit endpointHit = EndpointHitMapper.toEndpointHit(endpointHitDto);
 
         return EndpointHitMapper
@@ -30,8 +30,8 @@ public class EndpointHitServiceImpl implements EndpointHitService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<ViewStatDto> getStats(LocalDateTime start, LocalDateTime end,
-                                      List<String> uris, Boolean unique) {
+    public List<ViewStatDto> getAll(LocalDateTime start, LocalDateTime end,
+                                    List<String> uris, Boolean unique) {
         if (uris.isEmpty()) {
             return ViewStatMapper
                     .toViewStatDto(endpointHitRepository.getViewStats(start, end));

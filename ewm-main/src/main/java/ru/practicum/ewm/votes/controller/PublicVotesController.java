@@ -24,6 +24,6 @@ public class PublicVotesController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteVoteByUserIdAndEventId(@RequestParam(value = "userId") Long userId,
                                              @RequestParam(value = "eventId") Long eventId) {
-        voteService.deleteVoteByUserIdAndEventId(userId, eventId);
+        voteService.deleteByUserIdAndEventId(userId, eventId);
     }
 }
